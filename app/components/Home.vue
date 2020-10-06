@@ -1,6 +1,11 @@
 <template>
   <Page>
-    <ActionBar title="Firebase Vue demo"></ActionBar>
+    <ActionBar title="Firebase Vue demo">
+      <ActionItem @tap="onTapShare"
+                  ios.systemIcon="9" ios.position="left"
+                  android.systemIcon="ic_menu_share" android.position="actionBar"/>
+      <NavigationButton text="Go back" android.systemIcon="ic_menu_back" @tap="goBack"/>
+    </ActionBar>
     <GridLayout>
       <Label class="info">
         <FormattedString>
@@ -8,6 +13,7 @@
           <Span :text="message"/>
         </FormattedString>
       </Label>
+      <!--<DatePicker v-model="selectedDate"/>-->
       <Button @tap="onTap()">Tap Me</Button>
     </GridLayout>
   </Page>
@@ -17,9 +23,10 @@
 import {firebase} from "@nativescript/firebase"
 
 export default {
-  computed: {
-    message() {
-      return "Blank {N}-Vue app";
+  data() {
+    return {
+      message: 'Blank {N}-Vue app',
+      selectedDate: ''
     }
   },
 
@@ -27,36 +34,10 @@ export default {
     onTap() {
       firebase.login({type: firebase.LoginType.ANONYMOUS})
           .then((user) => {
-            alert('User uid:' + user.uid)
+            alert('User uid:' + user.uid);
           }, (error) => {
             alert('Error:' + error);
           })
-
-     /* firebase.addOnMessageReceivedCallback(
-          (message) => {
-            let contentId = null;
-            let contentType = null;
-
-            /!** if the app is already open, show a dialog message**!/
-            if (message.foreground) {
-              confirm({
-                title: message.title,
-                message: message.body,
-                okButtonText: "open ",
-                neutralButtonText: "cancel"
-              }).then(function (result) {
-                // result argument is boolean
-                if (result) {
-                  if (message.data.contentId && message.data.contentType) {
-                    contentId = message.data.contentId;
-                    contentType = message.data.contentType;
-                  }
-                }
-                console.log("Dialog result: " + result);
-              });
-            }
-          }
-      );*/
     }
   }
 };
