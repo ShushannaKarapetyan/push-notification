@@ -1,12 +1,14 @@
 import Vue from "nativescript-vue";
 import Home from "./components/Home";
 
-import { firebase } from "@nativescript/firebase"
-import { messaging, Message } from "@nativescript/firebase/messaging";
+import {firebase} from "@nativescript/firebase"
+import {messaging, Message} from "@nativescript/firebase/messaging";
 
-firebase.init({
+import { LocalNotifications } from "nativescript-local-notifications";
 
-}).then(
+LocalNotifications.hasPermission();
+
+firebase.init({}).then(
     function () {
         console.log("firebase.init done");
     },

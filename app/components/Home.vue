@@ -32,7 +32,9 @@ export default {
 
   methods: {
     onTap() {
-      firebase.login({type: firebase.LoginType.ANONYMOUS})
+      firebase.login({
+        type: firebase.LoginType.ANONYMOUS
+      })
           .then((user) => {
             alert('User uid:' + user.uid);
           }, (error) => {
